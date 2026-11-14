@@ -1,0 +1,380 @@
+/* ============================================================
+ * 设计 Token（详见《图书管理系统-前端开发文档》第 5 章）
+ * ============================================================ */
+:root {
+  /* Brand */
+  --brand-primary: #4f6bff;
+  --brand-primary-hover: #6b84ff;
+  --brand-primary-active: #3d56e0;
+  --brand-primary-light: #eef1ff;
+
+  /* Semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #64748b;
+
+  /* Neutral */
+  --gray-900: #0f172a;
+  --gray-700: #334155;
+  --gray-500: #64748b;
+  --gray-400: #94a3b8;
+  --gray-300: #cbd5e1;
+  --gray-200: #e2e8f0;
+  --gray-100: #f1f5f9;
+  --gray-50: #f6f8fb;
+  --white: #ffffff;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadow */
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-hover: 0 2px 4px rgba(15, 23, 42, 0.05), 0 12px 28px rgba(15, 23, 42, 0.1);
+  --shadow-modal: 0 8px 16px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.12);
+  --shadow-header: 0 1px 0 rgba(15, 23, 42, 0.06);
+
+  /* Element Plus 主题映射 */
+  --el-color-primary: var(--brand-primary);
+  --el-border-radius-base: var(--radius-sm);
+  --el-border-radius-small: 4px;
+  --el-font-size-base: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei',
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--gray-700);
+  background: var(--gray-50);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 让长元素（图片等）在容器内自适应 */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- 通用卡片 ---------- */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.card.hoverable {
+  cursor: pointer;
+}
+
+.card.hoverable:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ---------- 页面骨架 ---------- */
+.page {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 32px;
+}
+
+.page-header .desc {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+/* ---------- 列表页通用 ---------- */
+.filter-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+}
+
+.table-card {
+  padding: 16px 24px 20px;
+}
+
+/* 表格卡片内部：表格可横向滚动，分页固定在卡片底部不随表格移动 */
+.table-card .table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -8px;
+  padding: 0 8px;
+}
+.table-card .table-wrap::-webkit-scrollbar { height: 6px; }
+.table-card .table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5e1; border-radius: 3px;
+}
+
+/* Element Plus el-table 默认 width:100% 会被挤扁，强制按列宽撑开 */
+.table-card .el-table { width: max-content !important; min-width: 100%; }
+
+/* 重点列（书名 / 姓名 / 名称）：加粗加深 */
+.table-card .col-title-text {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+.table-card th.col-title .cell {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.table-card .el-pagination {
+  margin-top: 16px;
+}
+
+.cell-flex {
+  display: flex;
+  align-items: center;
+}
+
+/* 等宽数字 */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 图书封面 ---------- */
+.book-cover {
+  width: 36px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-card);
+}
+
+.book-cover.big {
+  width: 72px;
+  height: 96px;
+  font-size: 28px;
+  border-radius: 8px;
+}
+
+/* 真实封面图片 */
+.book-cover-img {
+  width: 36px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-card);
+  background: #f1f5f9;
+}
+
+.book-cover-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.book-cover-img.big {
+  width: 72px;
+  height: 96px;
+  border-radius: 8px;
+}
+
+/* 封面图上传 */
+.cover-upload {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.cover-upload-preview {
+  width: 72px;
+  height: 96px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--gray-400);
+  flex-shrink: 0;
+}
+
+.cover-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.cover-tip {
+  width: 100%;
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.6;
+}
+
+/* ---------- 详情抽屉 ---------- */
+.detail-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.detail-head h3 {
+  font-size: 18px;
+  color: var(--gray-900);
+  margin-bottom: 6px;
+}
+
+.detail-head p {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+}
+
+.intro {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--gray-700);
+}
+
+.drawer-sub {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 24px 0 12px;
+}
+
+.mini-book {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.mini-book:last-child {
+  border-bottom: none;
+}
+
+.mini-book .meta {
+  min-width: 0;
+}
+
+.mini-book .t {
+  color: var(--gray-900);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-book .a {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+/* ---------- 头像 ---------- */
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* ---------- Element Plus 细节覆盖 ---------- */
+.el-button {
+  border-radius: var(--radius-sm);
+}
+
+.el-dialog {
+  border-radius: var(--radius-lg) !important;
+}
+
+.el-message-box {
+  border-radius: var(--radius-lg) !important;
+}
+
+.el-table th.el-table__cell {
+  background: var(--gray-100) !important;
+  color: var(--gray-500);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.el-pagination {
+  justify-content: flex-end;
+}
+
+/* ---------- 页面切换过渡（fade-slide） ---------- */
+.fade-slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.fade-slide-leave-active {
+  transition: opacity 0.12s;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+}

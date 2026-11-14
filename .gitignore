@@ -1,0 +1,46 @@
+# ---------- Python / Django ----------
+__pycache__/
+*.py[cod]
+*.so
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# 本地数据库（含测试数据，不提交）
+db.sqlite3
+db.sqlite3-journal
+
+# Django 收集的静态文件 / 上传媒体
+staticfiles/
+media/
+
+# 环境变量与密钥
+.env
+.env.*
+!.env.example
+
+# ---------- 前端 / Node ----------
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- 开发期临时文件 ----------
+.screenshots/
+.tmp/
+*.log
